@@ -27,5 +27,6 @@
     <string name="developer_name">Developer: Arashi Funsho</string>
     <string name="developer_contact">Contact: farashi181@stu.ui.edu.ng, +2347087362008,
         +2349080702008</string>
+    <string name="title_activity_view_post">Posts</string>
 
 </resources>

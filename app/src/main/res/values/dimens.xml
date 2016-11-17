@@ -6,4 +6,5 @@
     <!-- cardview spacing -->
     <dimen name="cardview_top">53dp</dimen>
     <dimen name="cardview_mid">5dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

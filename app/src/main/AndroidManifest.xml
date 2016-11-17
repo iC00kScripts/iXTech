@@ -22,6 +22,11 @@
         <activity android:name=".activity.UserSignIn"/>
         <activity android:name=".activity.AdminSignIn"/>
         <activity android:name=".activity.UserCategory"/>
+        <activity
+            android:name=".activity.ViewPostActivity"
+            android:label="@string/title_activity_view_post"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
