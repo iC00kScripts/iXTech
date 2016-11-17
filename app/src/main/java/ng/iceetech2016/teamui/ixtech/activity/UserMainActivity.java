@@ -50,17 +50,21 @@ public class UserMainActivity extends AppCompatActivity {
     
     @OnClick(R.id.UserPosts)
     public void UserPosts(){
-        ShowPosts(iXTechUtils.POST_TYPE,"User");
+        Intent i= new Intent(this,UserViewPostActivity.class);
+        i.putExtra(iXTechUtils.POST_TYPE,"User");
+        startActivity(i);
     }
     
     @OnClick (R.id.cdnetPost)
     public void CDNetPosts(){
-        ShowPosts(iXTechUtils.POST_TYPE,"CDNet");
+        Intent i= new Intent(this,CDNetViewPostActivity.class);
+        i.putExtra(iXTechUtils.POST_TYPE,"User");
+        startActivity(i);
     }
 
-    private void ShowPosts(String key, String value){
+    private void ShowPosts(){
         Intent i= new Intent(this,UserViewPostActivity.class);
-        i.putExtra(key,value);
+        i.putExtra(iXTechUtils.POST_TYPE,"User");
         startActivity(i);
     }
 }

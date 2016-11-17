@@ -79,7 +79,7 @@ public class AdminSignIn extends AppCompatActivity {
 
     public void SignIn(){
         showProgressDialog();
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST, iXTechUtils.url, new
+        StringRequest jsonObjReq = new StringRequest(Request.Method.POST, "http://192.168.1.136/PhpStormProjects/iCeeTech2016/api/AdminLogin.php", new
                 Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

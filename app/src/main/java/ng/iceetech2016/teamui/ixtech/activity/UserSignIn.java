@@ -98,10 +98,10 @@ public class UserSignIn extends AppCompatActivity implements GoogleApiClient.OnC
             else {
                 // Signed in successfully, save info in sharedpreference
                 GoogleSignInAccount acct = result.getSignInAccount();
-                //if (acct.getEmail().endsWith("ui.edu.ng")) {
                     SettingsPreference settingsPreference = new SettingsPreference(this);
                     settingsPreference.SetUser(true);
-                    settingsPreference.SetUserSession(acct.getDisplayName());
+                //// TODO: 17/11/16 ask for institution and save
+                    settingsPreference.SetUserSession(acct.getDisplayName(),acct.getEmail(),"");
                     Intent in = new Intent(getApplicationContext(), UserMainActivity.class);
                     in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

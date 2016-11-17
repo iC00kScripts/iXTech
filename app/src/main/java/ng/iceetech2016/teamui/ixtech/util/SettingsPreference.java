@@ -27,9 +27,11 @@ public class SettingsPreference {
     private static final String LOGIN_PREF = "LOGIN STATUS";
     private static final String SEC_LOGIN_PREF = "ADMIN LOGIN STATUS";
     public static final String USER_NAME = "NAME";
+    public static final String USER_EMAIL = "EMAIL";
     public static final String USER_PHONE="PHONE";
     public static final String USER_SCHOOL="SCHOOL";
     public static final String USER_CATEGORY = "CATEGORY";
+    public static final String USER_INSTITUTION = "INSITUTION";
 
     public SettingsPreference(Context _context){
         this._context=_context;
@@ -59,13 +61,15 @@ public class SettingsPreference {
     }
 
     public boolean IsUserLogged(){
-        return pref.getBoolean(LOGIN_PREF,true);
+        return pref.getBoolean(LOGIN_PREF,false);
     }
     public boolean IsSecUserLogged(){
         return pref.getBoolean(SEC_LOGIN_PREF,false);
     }
-    public void SetUserSession(String name){
+    public void SetUserSession(String name,String email,String institution){
         editor.putString(USER_NAME,name);
+        editor.putString(USER_EMAIL,email);
+        editor.putString(USER_INSTITUTION,institution);
         editor.apply();
     }
 
@@ -80,8 +84,9 @@ public class SettingsPreference {
     public HashMap<String,String> GetUserSession(){
         //Use hashmap to store user credentials and return to where needed
         HashMap<String, String> user = new HashMap<>();
-        user.put(USER_NAME, pref.getString(USER_NAME, "Arashi Funsho"));
-        user.put(USER_PHONE,pref.getString(USER_PHONE,""));
+        user.put(USER_NAME, pref.getString(USER_NAME, ""));
+        user.put(USER_EMAIL,pref.getString(USER_EMAIL,""));
+        user.put(USER_INSTITUTION,pref.getString(USER_INSTITUTION,""));
         return user;
     }
     public void ClearUserSession(){

@@ -4,9 +4,11 @@
     <string name="diag_yes">YES</string>
     <string name="diag_no">NO</string>
     <string name="diag_proceed">PROCEED</string>
+    <string name="feedback">Kindly complete this feedback form to inform CDNetNG and others how you have benefited from the iCeeTech Initiative</string>
     <string name="diag_cancel">CANCEL</string>
     <string name="diag_ok">OK</string>
     <string name="norm_user">Normal User</string>
+    <string name="addcomm">POST FEEDBACK</string>
     <string name="cdnet_user">Admin</string>
     <string name="diag_confirm">CONFIRM</string>
     <string name="errorEntry">Field cannot be blank</string>
