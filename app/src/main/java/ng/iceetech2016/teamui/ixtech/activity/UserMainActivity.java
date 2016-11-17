@@ -1,5 +1,6 @@
 package ng.iceetech2016.teamui.ixtech.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ng.iceetech2016.teamui.ixtech.R;
+import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 
 public class UserMainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -48,11 +50,21 @@ public class UserMainActivity extends AppCompatActivity {
     
     @OnClick(R.id.UserPosts)
     public void UserPosts(){
-        //// TODO: 17/11/16  
+        Bundle bundle= new Bundle();
+        bundle.putString(iXTechUtils.POST_TYPE,"User");
+        ShowPosts(bundle);
     }
     
     @OnClick (R.id.cdnetPost)
     public void CDNetPosts(){
-        //// TODO: 17/11/16  
+        Bundle bundle= new Bundle();
+        bundle.putString(iXTechUtils.POST_TYPE,"CDNet");
+        ShowPosts(bundle);
+    }
+
+    private void ShowPosts(Bundle b){
+        Intent i= new Intent(this,UserViewPostActivity.class);
+        i.putExtras(b);
+        startActivity(i);
     }
 }

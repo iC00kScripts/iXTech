@@ -24,6 +24,7 @@ import java.io.OutputStreamWriter;
 public class iXTechUtils {
     public static final String url="http://www.uitilities.com/UICampusReportsApp/UICampusReportsAPI.php";
     public static final String SUCCESS="success";
+    public static final String POST_TYPE="TYPE";
     private static final String TAG="RESOLVE_COMPLAINTS";
 
     public static void SaveJSONResponse(Context context,String json,String filename){

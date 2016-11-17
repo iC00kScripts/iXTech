@@ -23,9 +23,11 @@
         <activity android:name=".activity.AdminSignIn"/>
         <activity android:name=".activity.UserCategory"/>
         <activity
-            android:name=".activity.ViewPostActivity"
+            android:name=".activity.UserViewPostActivity"
             android:label="@string/title_activity_view_post"
             android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".activity.CDNetViewPostActivity">
         </activity>
     </application>
 

@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ng.iceetech2016.teamui.ixtech.activity.ViewPostActivity"
-    tools:showIn="@layout/activity_view_post">
+    tools:context=".activity.UserViewPostActivity"
+    tools:showIn="@layout/activity_user_view_post">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

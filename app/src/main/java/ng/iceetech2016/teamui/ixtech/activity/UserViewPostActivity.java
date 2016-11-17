@@ -11,7 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import ng.iceetech2016.teamui.ixtech.R;
 
-public class ViewPostActivity extends AppCompatActivity {
+public class UserViewPostActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
@@ -19,7 +19,7 @@ public class ViewPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_post);
+        setContentView(R.layout.activity_user_view_post);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="ng.iceetech2016.teamui.ixtech.activity.ViewPostActivity">
+    tools:context=".activity.UserViewPostActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

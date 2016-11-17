@@ -1,15 +1,71 @@
 package ng.iceetech2016.teamui.ixtech.activity;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
+import com.github.javiersantos.bottomdialogs.BottomDialog;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ng.iceetech2016.teamui.ixtech.R;
+import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 
 public class AdminMainActivity extends AppCompatActivity {
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
+
+        ButterKnife.bind(toolbar);
+
+    }
+
+    @OnClick(R.id.UserPosts)
+    public void UserPosts(){
+        Bundle bundle= new Bundle();
+        bundle.putString(iXTechUtils.POST_TYPE,"User");
+        ShowPosts(bundle);
+    }
+
+    @OnClick (R.id.cdnetPost)
+    public void CDNetPosts(){
+        Bundle bundle= new Bundle();
+        bundle.putString(iXTechUtils.POST_TYPE,"CDNet");
+        ShowPosts(bundle);
+    }
+
+    private void ShowPosts(Bundle b){
+        Intent i= new Intent(this,UserViewPostActivity.class);
+        i.putExtras(b);
+        startActivity(i);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onBackPressed(){
+        new BottomDialog.Builder(this)
+                .setTitle("Exit")
+                .setContent("Do you want to exit the application?")
+                .setCancelable(true)
+                .setIcon(R.drawable.ic_exit)
+                .setPositiveText(R.string.diag_yes)
+                .onPositive(new BottomDialog.ButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull BottomDialog bottomDialog) {
+                        finish();
+                    }
+                })
+                .show();
     }
 }

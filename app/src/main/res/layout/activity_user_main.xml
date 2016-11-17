@@ -46,7 +46,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/cdnet_announce"
+                        android:src="@drawable/annouce"
                         android:padding="5dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView232"/>
