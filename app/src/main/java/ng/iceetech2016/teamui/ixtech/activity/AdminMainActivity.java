@@ -28,21 +28,17 @@ public class AdminMainActivity extends AppCompatActivity {
 
     @OnClick(R.id.UserPosts)
     public void UserPosts(){
-        Bundle bundle= new Bundle();
-        bundle.putString(iXTechUtils.POST_TYPE,"User");
-        ShowPosts(bundle);
+        ShowPosts(iXTechUtils.POST_TYPE,"User");
     }
 
     @OnClick (R.id.cdnetPost)
     public void CDNetPosts(){
-        Bundle bundle= new Bundle();
-        bundle.putString(iXTechUtils.POST_TYPE,"CDNet");
-        ShowPosts(bundle);
+        ShowPosts(iXTechUtils.POST_TYPE,"CDNet");
     }
 
-    private void ShowPosts(Bundle b){
+    private void ShowPosts(String key, String value){
         Intent i= new Intent(this,UserViewPostActivity.class);
-        i.putExtras(b);
+        i.putExtra(key,value);
         startActivity(i);
     }
 
