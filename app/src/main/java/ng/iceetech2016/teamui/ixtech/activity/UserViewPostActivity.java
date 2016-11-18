@@ -38,6 +38,7 @@ import ng.iceetech2016.teamui.ixtech.R;
 import ng.iceetech2016.teamui.ixtech.adapter.FeedbackAdapter;
 import ng.iceetech2016.teamui.ixtech.app.VolleyController;
 import ng.iceetech2016.teamui.ixtech.fragment.FeedbackForm;
+import ng.iceetech2016.teamui.ixtech.fragment.FeedbackViewFragment;
 import ng.iceetech2016.teamui.ixtech.model.FeedbackPOJO;
 import ng.iceetech2016.teamui.ixtech.util.Messager;
 import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
@@ -54,7 +55,7 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
     private FeedbackPOJO feedbackPojo;
 
     private static final String API_LOCATION="12", JSONpersist="feedback",
-            url="http://192.168.1.136/PhpStormProjects/iCeeTech2016/api/LoadUserPosts.php";
+            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/LoadUserPosts.php";
     private String TAG="FeedbackListing", comment_id,post_id;
 
     /**
@@ -114,15 +115,21 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
             @Override
             public void onClick(View view, int position) {
                 feedbackPojo = feedbackPOJOList.get(position);
-                //// TODO: 17/11/16
+                ViewItem(feedbackPojo);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                //// TODO: 16/08/16 delete the comment on verification as listing owner
+                ViewItem(feedbackPojo);
             }
         }));
 
+    }
+
+    public void ViewItem(FeedbackPOJO feedbackPOJO){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogFragment feedbackfrag= FeedbackViewFragment.newInstance(feedbackPOJO);
+        feedbackfrag.show(fragmentManager,"View Feedback");
     }
 
     public void fetchList() {

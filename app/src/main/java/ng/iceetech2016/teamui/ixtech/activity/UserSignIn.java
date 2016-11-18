@@ -1,15 +1,22 @@
 package ng.iceetech2016.teamui.ixtech.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.bottomdialogs.BottomDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -24,6 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ng.iceetech2016.teamui.ixtech.R;
+import ng.iceetech2016.teamui.ixtech.util.Messager;
 import ng.iceetech2016.teamui.ixtech.util.SettingsPreference;
 
 
@@ -97,16 +105,8 @@ public class UserSignIn extends AppCompatActivity implements GoogleApiClient.OnC
             }
             else {
                 // Signed in successfully, save info in sharedpreference
-                GoogleSignInAccount acct = result.getSignInAccount();
-                    SettingsPreference settingsPreference = new SettingsPreference(this);
-                    settingsPreference.SetUser(true);
-                //// TODO: 17/11/16 ask for institution and save
-                    settingsPreference.SetUserSession(acct.getDisplayName(),acct.getEmail(),"");
-                    Intent in = new Intent(getApplicationContext(), UserMainActivity.class);
-                    in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(in);
-                    finish();
+                    GoogleSignInAccount acct = result.getSignInAccount();
+                    GrabUNIname(acct.getDisplayName(),acct.getEmail());
             }
         } else {
             SignOut();
@@ -136,6 +136,46 @@ public class UserSignIn extends AppCompatActivity implements GoogleApiClient.OnC
                 .setPositiveText(R.string.diag_ok)
                 .onPositive(null)
                 .show();
+    }
+
+    private void GrabUNIname(final String uname, final String email){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = inflater.inflate(R.layout.fill_form, null);
+
+        final EditText ed= (EditText)customView.findViewById(R.id.instName);
+        final EditText ed2= (EditText)customView.findViewById(R.id.instEmail);
+        ed2.setVisibility(View.GONE);
+
+
+        new MaterialStyledDialog(this)
+                .setDescription("Please enter the name of your institution below")
+                .setCustomView(customView)
+                .withDarkerOverlay(true)
+                .setCancelable(false)
+                .setTitle("Institution Info.")
+                .withIconAnimation(true)
+                .setIcon(R.drawable.ic_us)
+                .setPositive(getString(R.string.diag_ok), new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String  name = ed.getText().toString();
+                        if (name.equals(""))
+                            new Messager(UserSignIn.this).ToastMessage("Field entry is required");
+                        else{
+                            SettingsPreference settingsPreference = new SettingsPreference
+                                    (UserSignIn.this);
+                            settingsPreference.SetUser(true);
+                            settingsPreference.SetUserSession(uname,email,name);
+                            Intent in = new Intent(getApplicationContext(), UserMainActivity.class);
+                            in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(in);
+                            finish();
+                        }
+
+                    }
+                }).show();
+
     }
 
     private void SignOut() {

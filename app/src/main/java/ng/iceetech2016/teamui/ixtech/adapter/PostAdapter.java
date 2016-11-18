@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder>{
 
         @Bind(R.id.comment_name) TextView Name;
         @Bind(R.id.comment_msg)TextView message;
+        @Bind(R.id.ico)ImageView imageView;
         @Bind(R.id.date_posted)TextView datePosted;
-        @Bind(R.id.comment_email)TextView email;
 
         public MyViewHolder(View view) {
             super(view);
@@ -53,7 +54,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder>{
         holder.Name.setText("CDNetNG");
         holder.message.setText(postPOJO.getMessage());
         holder.datePosted.setText(postPOJO.getDate_added());
-        holder.email.setVisibility(View.GONE);
+        holder.imageView.setVisibility(View.GONE);
     }
     @Override
     public int getItemCount() {

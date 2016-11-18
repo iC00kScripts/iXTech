@@ -22,23 +22,24 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
-        ButterKnife.bind(toolbar);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("iXTech: Admin Home");
+
 
     }
 
     @OnClick(R.id.UserPosts)
     public void UserPosts(){
-        ShowPosts(iXTechUtils.POST_TYPE,"User");
+        Intent i= new Intent(this,UserViewPostActivity.class);
+        i.putExtra(iXTechUtils.POST_TYPE,"CDNet");
+        startActivity(i);
     }
 
     @OnClick (R.id.cdnetPost)
     public void CDNetPosts(){
-        ShowPosts(iXTechUtils.POST_TYPE,"CDNet");
-    }
-
-    private void ShowPosts(String key, String value){
-        Intent i= new Intent(this,UserViewPostActivity.class);
-        i.putExtra(key,value);
+        Intent i= new Intent(this,CDNetViewPostActivity.class);
+        i.putExtra(iXTechUtils.POST_TYPE,"CDNet");
         startActivity(i);
     }
 

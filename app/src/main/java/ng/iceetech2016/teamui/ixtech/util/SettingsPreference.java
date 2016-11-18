@@ -28,8 +28,8 @@ public class SettingsPreference {
     private static final String SEC_LOGIN_PREF = "ADMIN LOGIN STATUS";
     public static final String USER_NAME = "NAME";
     public static final String USER_EMAIL = "EMAIL";
-    public static final String USER_PHONE="PHONE";
-    public static final String USER_SCHOOL="SCHOOL";
+    public static final String SEC_USER_NAME="SEC_NAME";
+    public static final String SEC_USER_EMAIL="SEC_EMAIL";
     public static final String USER_CATEGORY = "CATEGORY";
     public static final String USER_INSTITUTION = "INSITUTION";
 
@@ -53,13 +53,6 @@ public class SettingsPreference {
         editor.apply();
     }
 
-
-    public void persistUser(String Phone, String School){
-        editor.putString(USER_PHONE,Phone);
-        editor.putString(USER_SCHOOL,School);
-        editor.apply();
-    }
-
     public boolean IsUserLogged(){
         return pref.getBoolean(LOGIN_PREF,false);
     }
@@ -70,6 +63,13 @@ public class SettingsPreference {
         editor.putString(USER_NAME,name);
         editor.putString(USER_EMAIL,email);
         editor.putString(USER_INSTITUTION,institution);
+        editor.apply();
+    }
+
+    public void SetSecUserSession(String email){
+        //editor.putString(SEC_USER_NAME,name);
+        editor.putString(SEC_USER_EMAIL,email);
+        editor.putBoolean(SEC_LOGIN_PREF,true);
         editor.apply();
     }
 
@@ -87,6 +87,14 @@ public class SettingsPreference {
         user.put(USER_NAME, pref.getString(USER_NAME, ""));
         user.put(USER_EMAIL,pref.getString(USER_EMAIL,""));
         user.put(USER_INSTITUTION,pref.getString(USER_INSTITUTION,""));
+        return user;
+    }
+
+    public HashMap<String,String> GetSecUserSession(){
+        //Use hashmap to store user credentials and return to where needed
+        HashMap<String, String> user = new HashMap<>();
+        user.put(SEC_USER_NAME, pref.getString(SEC_USER_NAME, ""));
+        user.put(SEC_USER_EMAIL,pref.getString(SEC_USER_EMAIL,""));
         return user;
     }
     public void ClearUserSession(){

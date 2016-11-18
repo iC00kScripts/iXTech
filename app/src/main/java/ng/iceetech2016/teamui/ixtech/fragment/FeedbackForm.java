@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.NoConnectionError;
@@ -35,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ng.iceetech2016.teamui.ixtech.R;
+import ng.iceetech2016.teamui.ixtech.activity.CDNetViewPostActivity;
 import ng.iceetech2016.teamui.ixtech.activity.UserViewPostActivity;
 import ng.iceetech2016.teamui.ixtech.app.VolleyController;
 import ng.iceetech2016.teamui.ixtech.util.Messager;
@@ -48,7 +51,9 @@ public class FeedbackForm extends DialogFragment {
 
     @Bind(R.id.uName)TextView Name;
     @Bind(R.id.uEmail)TextView Email;
+    @Bind(R.id.llayout)LinearLayout layout;
     @Bind(R.id.fragInfo)TextView Frag;
+    @Bind(R.id.proceed)AppCompatButton button;
     @Bind(R.id.uFeedback)EditText Feedback;
 
     private String feedback,name,email,institution;
@@ -56,8 +61,7 @@ public class FeedbackForm extends DialogFragment {
 
     private String API_LOCATION="44";
     private static String TAG= "FEEDBACK";
-    private String type = "",url="http://192.168.1.136/PhpStormProjects/iCeeTech2016/api/UserPost" +
-            ".php";
+    private String type = "",url= "",sName,sEmail;
 
 
     //// TODO: 17/11/16 use dialog to ask for name and contact of admin after successful sign-in
@@ -80,7 +84,10 @@ public class FeedbackForm extends DialogFragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_feedback_form, container, false);
         ButterKnife.bind(this,v);
-        getDialog().setTitle(getString(R.string.addcomm));
+        if(type.equals("User"))
+            getDialog().setTitle(getString(R.string.addcomm));
+        else
+            getDialog().setTitle(getString(R.string.addtitle));
         //getDialog().getWindow().setIcon(R.drawable.ic_setting_dark);
         getDialog().setCancelable(true);
 
@@ -92,15 +99,29 @@ public class FeedbackForm extends DialogFragment {
             titleDivider.setBackgroundColor(res.getColor(R.color.white));
         }
 
-        Map<String,String> userDetails=new SettingsPreference(getActivity()).GetUserSession();
-        Name.setText(userDetails.get(SettingsPreference.USER_NAME));
-        Email.setText(userDetails.get(SettingsPreference.USER_EMAIL));
-        institution=userDetails.get(SettingsPreference.USER_INSTITUTION);
+        if(type.equals("User")) {
+            Map<String, String> userDetails = new SettingsPreference(getActivity()).GetUserSession();
+            Name.setText(userDetails.get(SettingsPreference.USER_NAME));
+            Email.setText(userDetails.get(SettingsPreference.USER_EMAIL));
+            institution = userDetails.get(SettingsPreference.USER_INSTITUTION);
+        } else{
+            Map<String, String> userDetails = new SettingsPreference(getActivity())
+                    .GetSecUserSession();
+            //sName=userDetails.get(SettingsPreference.SEC_USER_NAME);
+            sEmail=userDetails.get(SettingsPreference.SEC_USER_EMAIL);
+        }
 
 
         type= getArguments().getString(iXTechUtils.POST_TYPE);
-        if (type.equals("CDNet"))
-            Frag.setVisibility(View.GONE);
+        if (type.equals("CDNet")) {
+            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/AdminPost.php";
+            Frag.setText("Enter the announcement in the field provided below");
+            layout.setVisibility(View.GONE);
+            button.setText("ANNOUNCE");
+            Feedback.setHint("Announcement here");
+        } else{
+            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/UserPost.php";
+        }
 
         return v;
     }
@@ -108,10 +129,12 @@ public class FeedbackForm extends DialogFragment {
     private boolean validate(){
         boolean valid = true;
         feedback = Feedback.getText().toString();
-        name=Name.getText().toString();
-        email=Email.getText().toString();
+        if(type.equals("User")) {
+            name = Name.getText().toString();
+            email = Email.getText().toString();
+        }
 
-        if(name.equals("")||email.equals("")){
+        if(!type.equals("CDNet")&&(name.equals("")||email.equals(""))){
             new Messager(getActivity()).ToastMessage("Reset User and Try again!");
             valid=false;
         }
@@ -127,15 +150,19 @@ public class FeedbackForm extends DialogFragment {
         Map<String, String> params = new HashMap<>();
         //params.put("api_location",API_LOCATION);
         params.put("message", feedback);
-        params.put("cname",name);
-        params.put("institution","institution");
-        params.put("email",email);
+        //params.put("cname",sName);
+        if(type.equals("User"))
+            params.put("institution",institution);
+        params.put("email",sEmail);
         return params;
     }
 
     private void showProgressDialog(){
         pDialog = new ProgressDialog(getActivity(),R.style.ProgressDialogTheme);
-        pDialog.setMessage("Posting Feedback...");
+        if(type.equals("User"))
+            pDialog.setMessage("Posting Feedback...");
+        else
+            pDialog.setMessage("Posting Announcement...");
         pDialog.setIndeterminate(true);
         //pDialog.setInverseBackgroundForced(true);
         pDialog.setCancelable(false);
@@ -168,11 +195,17 @@ public class FeedbackForm extends DialogFragment {
                             String response= s.getString(iXTechUtils.SUCCESS);
 
                             if (response.equalsIgnoreCase("1")){
-                                new Messager(getActivity()).ToastMessage("Feedback was submitted " +
-                                        "successfully");
                                 hideProgressDialog();
                                 getDialog().dismiss();
-                                ((UserViewPostActivity) getActivity()).onRefresh();
+                                if(type.equals("User")) {
+                                    new Messager(getActivity()).ToastMessage("Feedback was submitted " +
+                                            "successfully");
+                                    ((UserViewPostActivity) getActivity()).onRefresh();
+                                }else{
+                                    new Messager(getActivity()).ToastMessage("Announcement was " +
+                                            "posted");
+                                    ((CDNetViewPostActivity) getActivity()).onRefresh();
+                                }
                             } else{
                                 hideProgressDialog();
                                 new Messager(getActivity()).ToastMessage("An Error occurred. " +

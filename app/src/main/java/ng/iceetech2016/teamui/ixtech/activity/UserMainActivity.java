@@ -23,6 +23,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("iXTech: Home");
     }
 
     @Override

@@ -9,6 +9,7 @@
     <string name="diag_ok">OK</string>
     <string name="norm_user">Normal User</string>
     <string name="addcomm">POST FEEDBACK</string>
+    <string name="addtitle">POST ANNOUNCEMENT</string>
     <string name="cdnet_user">Admin</string>
     <string name="diag_confirm">CONFIRM</string>
     <string name="errorEntry">Field cannot be blank</string>

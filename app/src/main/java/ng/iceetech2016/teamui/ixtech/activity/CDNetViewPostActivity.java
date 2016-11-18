@@ -56,7 +56,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
     private PostPOJO postPOJO;
 
     private String TAG="POSTListing",post_id="",
-            url="http://192.168.1.136/PhpStormProjects/iCeeTech2016/api/LoadAdminPosts.php";
+            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/LoadAdminPosts.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package ng.iceetech2016.teamui.ixtech.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,9 +9,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
@@ -21,6 +27,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.github.javiersantos.bottomdialogs.BottomDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 
 import org.json.JSONObject;
 
@@ -38,7 +45,7 @@ import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 public class AdminSignIn extends AppCompatActivity {
     public static final String TAG = "PinLockView";
     public static final String API_LOCATION = "21";
-    private String access;
+    private String access, url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/AdminLogin.php";
 
     @Bind(R.id.pin_lock_view) PinLockView mPinLockView;
     @Bind(R.id.indicator_dots) IndicatorDots mIndicatorDots;
@@ -79,7 +86,7 @@ public class AdminSignIn extends AppCompatActivity {
 
     public void SignIn(){
         showProgressDialog();
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST, "http://192.168.1.136/PhpStormProjects/iCeeTech2016/api/AdminLogin.php", new
+        StringRequest jsonObjReq = new StringRequest(Request.Method.POST, url, new
                 Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -88,11 +95,7 @@ public class AdminSignIn extends AppCompatActivity {
                             JSONObject res= new JSONObject(response);
                             String resp= res.getString(iXTechUtils.SUCCESS);
                             if (resp.equalsIgnoreCase("1")){
-                                Intent i= new Intent(AdminSignIn.this,AdminMainActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(i);
-                                finish();
+                                GrabMoreInfo();
                             }else{
                                 mPinLockView.resetPinLockView();
                                 Snackbar.make(snackbarLayout,"Invalid Access Token. Please Try " +
@@ -122,13 +125,53 @@ public class AdminSignIn extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<>();
-                params.put("api_location",API_LOCATION);
+                //params.put("api_location",API_LOCATION);
                 params.put("access_token",access);
                 return params;
             }
         };
         // Adding request to request queue
         VolleyController.getInstance().addToRequestQueue(jsonObjReq, TAG);
+    }
+
+
+    private void GrabMoreInfo(){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = inflater.inflate(R.layout.fill_form, null);
+
+        final EditText ed= (EditText)customView.findViewById(R.id.instName);
+        final EditText ed2= (EditText)customView.findViewById(R.id.instEmail);
+        ed.setVisibility(View.GONE);
+
+
+        new MaterialStyledDialog(this)
+                .setDescription("Please enter your name and contact email below")
+                .setCustomView(customView)
+                .withDarkerOverlay(true)
+                .setCancelable(false)
+                .setTitle("Contact Info.")
+                .withIconAnimation(true)
+                .setIcon(R.drawable.ic_us)
+                .setPositive(getString(R.string.diag_ok), new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String email= ed2.getText().toString();
+                        if (email.equals(""))
+                            new Messager(AdminSignIn.this).ToastMessage("Both fields are required");
+                        else{
+                            SettingsPreference settingsPreference = new SettingsPreference
+                                    (AdminSignIn.this);
+                            settingsPreference.SetSecUserSession(email);
+                            Intent i= new Intent(AdminSignIn.this,AdminMainActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }
+                }).show();
+
     }
 
     private void showProgressDialog(){
