@@ -25,7 +25,7 @@ public class Messager {
         mdiag = new MaterialStyledDialog(context);
     }
 
-    /*public void showAboutDialog(){
+    public void showAboutDialog(){
         LayoutInflater inflater=(LayoutInflater)_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mdiag
                 .setTitle(_context.getResources().getString(R.string.about_app))
@@ -39,7 +39,7 @@ public class Messager {
                 .setPositive(_context.getResources().getString(R.string.diag_ok),null)
                 .build();
         mdiag.show();
-    }*/
+    }
     public void showDialog(String title, String Message){
         mdiag
                 .setIcon(_context.getResources().getDrawable(R.drawable.ic_info))

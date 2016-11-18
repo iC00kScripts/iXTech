@@ -114,13 +114,13 @@ public class FeedbackForm extends DialogFragment {
 
         type= getArguments().getString(iXTechUtils.POST_TYPE);
         if (type.equals("CDNet")) {
-            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/AdminPost.php";
+            url="http://www.uitilities.com/iCeeTech2016/api/AdminPost.php";
             Frag.setText("Enter the announcement in the field provided below");
             layout.setVisibility(View.GONE);
             button.setText("ANNOUNCE");
             Feedback.setHint("Announcement here");
         } else{
-            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/UserPost.php";
+            url="http://www.uitilities.com/iCeeTech2016/api/UserPost.php";
         }
 
         return v;

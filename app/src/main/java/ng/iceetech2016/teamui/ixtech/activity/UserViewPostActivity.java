@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -55,7 +56,7 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
     private FeedbackPOJO feedbackPojo;
 
     private static final String API_LOCATION="12", JSONpersist="feedback",
-            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/LoadUserPosts.php";
+            url="http://www.uitilities.com/iCeeTech2016/api/LoadUserPosts.php";
     private String TAG="FeedbackListing", comment_id,post_id;
 
     /**
@@ -71,8 +72,8 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_view_post);
-        setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         if(getIntent().hasExtra(iXTechUtils.POST_TYPE))
             type=getIntent().getStringExtra(iXTechUtils.POST_TYPE);
@@ -80,9 +81,9 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
         if(!type.equals("")&&!type.equals("User"))
             fab.setVisibility(View.GONE);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setTitle("USER FEEDBACK");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("USER FEEDBACK");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,12 +140,12 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
             @Override
             public void onResponse(String s) {
                 swipeRefreshLayout.setRefreshing(false);
-                iXTechUtils.SaveJSONResponse(UserViewPostActivity.this, s, JSONpersist);
+
                 Log.d(TAG, "Comments:- " + s);
                 try {
                     //convert json string array response to JSONArray Object and parse
                     JSONObject jsonObject = new JSONObject(s);
-
+                    iXTechUtils.SaveJSONResponse(UserViewPostActivity.this, jsonObject.getString("posts"), JSONpersist);
                     ParseJSONFeedback(new JSONArray(jsonObject.getString("posts")));
 
                 } catch (Exception e) {

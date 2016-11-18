@@ -45,7 +45,7 @@ import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 public class AdminSignIn extends AppCompatActivity {
     public static final String TAG = "PinLockView";
     public static final String API_LOCATION = "21";
-    private String access, url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/AdminLogin.php";
+    private String access, url="http://www.uitilities.com/iCeeTech2016/api/AdminLogin.php";
 
     @Bind(R.id.pin_lock_view) PinLockView mPinLockView;
     @Bind(R.id.indicator_dots) IndicatorDots mIndicatorDots;

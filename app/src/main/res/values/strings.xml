@@ -21,15 +21,13 @@
 
     <!-- ABOUT APP DIALOG INFO -->
     <string name="about_app">About iXTech</string>
-    <string name="about_app_desc">This application is a part of the UItilities collection,
-        which focuses on proffering solutions to various inherent problems in and around the University of
-        Ibadan campus. Campus Reports as the name suggests, aids in the submission and resolution of all
-        complaints/reports regards various services on campus such as Transportation (Cabs and
-        Bikes), and Consumables provider (Hall Cafeterias and Butteries).</string>
-    <string name="app_version">Version: 1.5</string>
-    <string name="developer_name">Developer: Arashi Funsho</string>
-    <string name="developer_contact">Contact: farashi181@stu.ui.edu.ng, +2347087362008,
-        +2349080702008</string>
+    <string name="about_app_desc">iXTech is a mobile application that allows participants
+        of the I Cee Tech event share their experiences, connect and get sponsored news from
+    the organizers, CDNet. You can pin posts, read news, connect via email and have fun</string>
+    <string name="app_version">Version: 1.0</string>
+    <string name="developer_name">Developer: Arashi F, Nkemelu D.</string>
+    <string name="developer_contact">Contact: arashi.funsho@hotmail.com,
+        +2347087362008; daniel.nkemelu@gmail.com, +2347033577374</string>
     <string name="title_activity_view_post">Posts</string>
 
 </resources>

@@ -34,6 +34,8 @@
         </activity>
         <activity android:name=".activity.AboutCDNetNG">
         </activity>
+        <activity android:name=".activity.AboutICeeTech">
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_cgnet"
+        android:title="CDNet Posts"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_user"
+        android:title="Pinned Posts"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Settings"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_abt"
+        android:title="About"
+        app:showAsAction="never"/>
+</menu>

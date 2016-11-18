@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.github.javiersantos.bottomdialogs.BottomDialog;
 
@@ -12,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ng.iceetech2016.teamui.ixtech.R;
+import ng.iceetech2016.teamui.ixtech.util.Messager;
 import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 
 public class UserMainActivity extends AppCompatActivity {
@@ -63,9 +67,35 @@ public class UserMainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void ShowPosts(){
-        Intent i= new Intent(this,UserViewPostActivity.class);
-        i.putExtra(iXTechUtils.POST_TYPE,"User");
+    @OnClick (R.id.aboutCDNet)
+    public void CDNet(){
+        Intent i= new Intent(this,AboutICeeTech.class);
         startActivity(i);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_cgnet:
+                CDNetPosts();
+                break;
+            case R.id.menu_user:
+                UserPosts();
+                break;
+            case R.id.menu_settings:
+                new Messager(this).ToastMessage("Todo: Functionality");
+                break;
+            case R.id.menu_abt:
+                new Messager(this).showAboutDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

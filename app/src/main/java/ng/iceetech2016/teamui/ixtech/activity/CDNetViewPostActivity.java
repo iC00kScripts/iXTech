@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -44,7 +45,7 @@ import ng.iceetech2016.teamui.ixtech.util.Messager;
 import ng.iceetech2016.teamui.ixtech.util.iXTechUtils;
 
 public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
-    private static final String API_LOCATION="12", JSONpersist="CDNet Post";
+    private static final String API_LOCATION="12", JSONpersist="CDNetPost";
     private String type="";
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
@@ -56,7 +57,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
     private PostPOJO postPOJO;
 
     private String TAG="POSTListing",post_id="",
-            url="http://192.168.0.105/PhpStormProjects/iCeeTech2016/api/LoadAdminPosts.php";
+            url="http://www.uitilities.com/iCeeTech2016/api/LoadAdminPosts.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,11 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
         if(!type.equals("")&&!type.equals("CDNet"))
             fab.setVisibility(View.GONE);
 
-/*
+        setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("CDNet Info.");
-*/
+        getSupportActionBar().setTitle("CDNet Announcements.");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +150,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
                 try {
                     //convert json string array response to JSONArray Object and parse
                     JSONObject arr = new JSONObject(s);
+                    iXTechUtils.SaveJSONResponse(CDNetViewPostActivity.this,arr.getString("posts"),JSONpersist);
                     ParseJSON(new JSONArray(arr.getString("posts")));
 
                 } catch (Exception e) {
