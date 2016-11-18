@@ -16,6 +16,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -50,6 +51,7 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
     @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.recycler_view) RecyclerView recyclerView;
+    @Bind(R.id.postCount)TextView PostCount;
     private String type="";
     private List<FeedbackPOJO>feedbackPOJOList;
     private FeedbackAdapter feedbackAdapter;
@@ -184,6 +186,7 @@ public class UserViewPostActivity extends AppCompatActivity implements SwipeRefr
 
     private void ParseJSONFeedback(JSONArray response) {
         if (!(response == null) && response.length() > 0) {
+            PostCount.setText((response.length()) +" pinned experience(s)");
             feedbackPOJOList.clear();
             for (int i = response.length() - 1; i >= 0; i--) {
                 try {

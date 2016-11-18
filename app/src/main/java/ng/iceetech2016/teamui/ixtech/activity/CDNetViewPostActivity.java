@@ -16,6 +16,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -51,6 +52,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
     @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.recycler_view) RecyclerView recyclerView;
+    @Bind(R.id.postCount)TextView PostCount;
 
     private List<PostPOJO> postPOJOList;
     private PostAdapter postAdapter;
@@ -75,7 +77,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("CDNet Announcements.");
+        getSupportActionBar().setTitle("CDNet Announcements");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +137,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
     public void Clicked(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment fragment= FeedbackForm.newInstance("CDNet");
-        fragment.show(fragmentManager,"Add Feedback");
+        fragment.show(fragmentManager,"Add Announcement");
     }
 
     public void fetchList(){
@@ -191,6 +193,7 @@ public class CDNetViewPostActivity extends AppCompatActivity implements SwipeRef
     private void ParseJSON(JSONArray response) {
         if (!(response == null) && response.length() > 0) {
             postPOJOList.clear();
+            PostCount.setText((response.length()) +" post(s)");
             for (int i = response.length() - 1; i >= 0; i--) {
                 try {
                     JSONObject feedback = response.getJSONObject(i);

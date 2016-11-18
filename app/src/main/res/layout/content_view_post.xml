@@ -12,12 +12,24 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_default"
         android:layout_width="match_parent"
+        android:layout_marginBottom="3dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/postCount"
+        android:padding="10dp"
+        android:textStyle="italic"
+        android:textColor="@color/White"
+        android:layout_centerHorizontal="true"
+        android:background="@color/DarkSlateGray"
+        android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/postCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView

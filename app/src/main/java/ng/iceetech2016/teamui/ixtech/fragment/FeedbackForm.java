@@ -64,7 +64,6 @@ public class FeedbackForm extends DialogFragment {
     private String type = "",url= "",sName,sEmail;
 
 
-    //// TODO: 17/11/16 use dialog to ask for name and contact of admin after successful sign-in
     public static FeedbackForm newInstance(String type){
         FeedbackForm feedbackForm= new FeedbackForm();
         Bundle bundle = new Bundle();
@@ -84,6 +83,7 @@ public class FeedbackForm extends DialogFragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_feedback_form, container, false);
         ButterKnife.bind(this,v);
+        type= getArguments().getString(iXTechUtils.POST_TYPE);
         if(type.equals("User"))
             getDialog().setTitle(getString(R.string.addcomm));
         else
@@ -111,8 +111,6 @@ public class FeedbackForm extends DialogFragment {
             sEmail=userDetails.get(SettingsPreference.SEC_USER_EMAIL);
         }
 
-
-        type= getArguments().getString(iXTechUtils.POST_TYPE);
         if (type.equals("CDNet")) {
             url="http://www.uitilities.com/iCeeTech2016/api/AdminPost.php";
             Frag.setText("Enter the announcement in the field provided below");
@@ -207,6 +205,7 @@ public class FeedbackForm extends DialogFragment {
                                     ((CDNetViewPostActivity) getActivity()).onRefresh();
                                 }
                             } else{
+                                Log.d("ixTech", resp);
                                 hideProgressDialog();
                                 new Messager(getActivity()).ToastMessage("An Error occurred. " +
                                         "Please try again");

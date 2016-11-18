@@ -145,7 +145,7 @@ public class AdminSignIn extends AppCompatActivity {
 
 
         new MaterialStyledDialog(this)
-                .setDescription("Please enter your name and contact email below")
+                .setDescription("Please enter your contact email below")
                 .setCustomView(customView)
                 .withDarkerOverlay(true)
                 .setCancelable(false)

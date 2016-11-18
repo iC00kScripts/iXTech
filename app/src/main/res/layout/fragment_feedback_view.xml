@@ -39,10 +39,10 @@
     <TextView
         android:id="@+id/comment_email"
         android:textStyle="italic"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
+        android:text="SIKSMISISKD"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView134"
+        android:layout_alignTop="@+id/textView134"
         android:layout_toRightOf="@+id/textView134"
         android:layout_toEndOf="@+id/textView134"/>
 
